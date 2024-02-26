@@ -1,0 +1,31 @@
+
+USERS
+
+CREATE USER
+POST  ==> http://localhost:6060/api/users/register
+{
+  "name" : "sf",
+  "email" : "sf@gmail.com",
+  "password" : "123456",
+  "city" : "pune",
+  "address" : "mh",
+  "country" : "India",
+  "phone" : "123456"
+}
+
+
+LOGIN USER
+POST ==> http://localhost:6060/api/users/login
+{
+  "email" : "sf@gmail.com",
+  "password" : "123456"
+}
+
+
+LOGIN USER PROFILE
+GET  ==>  http://localhost:6060/api/users/profile
+
+
+
+LOGIN USER PROFILE
+GET  ==>  http://localhost:6060/api/users/logout

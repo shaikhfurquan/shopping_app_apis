@@ -1,3 +1,7 @@
+<<<<<<< Updated upstream
+=======
+import { generateToken } from "../helper/generateToken.js"
+>>>>>>> Stashed changes
 import UserModel from "../models/userModel.js"
 
 export const registerUser = async (req, res) => {
@@ -58,6 +62,7 @@ export const loginUser = async (req, res) => {
         }
         //check password/compare password
         const isMatch = await user.comparePassword(password)
+<<<<<<< Updated upstream
         if(!isMatch) {
             res.status(500).json({
                 success: false,
@@ -69,6 +74,25 @@ export const loginUser = async (req, res) => {
             success: true,
             message: `Welcome ${user.name}`,
             user: user
+=======
+        if (!isMatch) {
+            res.status(500).json({
+                success: false,
+                message: "Invalid Credentials",
+            })
+        }
+
+        const token = await generateToken(user)
+        res.status(201).cookie("token", token, {
+            expires: new Date(Date.now() + 60 * 60 * 1000),
+            secure: process.env.NODE_ENV === "development" ? true : false,
+            httpOnly: process.env.NODE_ENV === "development" ? true : false,
+        }).json({
+            success: true,
+            message: `Welcome ${user.name}`,
+            user: user,
+            token: token
+>>>>>>> Stashed changes
 
         })
     } catch (error) {
@@ -78,4 +102,48 @@ export const loginUser = async (req, res) => {
             error: error.message
         })
     }
+<<<<<<< Updated upstream
+=======
+}
+
+
+export const getUserProfile = async(req , res) =>{
+    try {
+        const loginUser = await UserModel.findById(req.user._id).select("-password")
+        res.status(200).json({
+            success: true,
+            message : 'User profile',
+            userPofile : loginUser
+
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error getting user profile",
+            error: error.message
+        })
+    }
+}
+
+
+
+export const logoutUser = async(req , res) => {
+    try {
+        
+        res.status(200).cookie("token" , "" , {
+            expires: new Date(Date.now()),
+            secure: process.env.NODE_ENV === "development" ? true : false,
+            httpOnly: process.env.NODE_ENV === "development" ? true : false,
+        }).json({
+            success: true,
+            message: "User logged-Out successfully",
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error logout user",
+            error: error.message
+        })
+    }
+>>>>>>> Stashed changes
 }
