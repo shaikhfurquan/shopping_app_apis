@@ -1,7 +1,5 @@
-<<<<<<< Updated upstream
-=======
+
 import { generateToken } from "../helper/generateToken.js"
->>>>>>> Stashed changes
 import UserModel from "../models/userModel.js"
 
 export const registerUser = async (req, res) => {
@@ -62,19 +60,6 @@ export const loginUser = async (req, res) => {
         }
         //check password/compare password
         const isMatch = await user.comparePassword(password)
-<<<<<<< Updated upstream
-        if(!isMatch) {
-            res.status(500).json({
-                success: false,
-                message : "Invalid Credentials",
-            })
-        }
-
-        res.status(201).json({
-            success: true,
-            message: `Welcome ${user.name}`,
-            user: user
-=======
         if (!isMatch) {
             res.status(500).json({
                 success: false,
@@ -92,8 +77,6 @@ export const loginUser = async (req, res) => {
             message: `Welcome ${user.name}`,
             user: user,
             token: token
->>>>>>> Stashed changes
-
         })
     } catch (error) {
         res.status(500).json({
@@ -102,8 +85,7 @@ export const loginUser = async (req, res) => {
             error: error.message
         })
     }
-<<<<<<< Updated upstream
-=======
+
 }
 
 
@@ -145,5 +127,4 @@ export const logoutUser = async(req , res) => {
             error: error.message
         })
     }
->>>>>>> Stashed changes
 }
