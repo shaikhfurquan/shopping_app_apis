@@ -5,11 +5,22 @@ import morgan from 'morgan';
 import connectDB from './db/connectDB.js';
 import userRouter from './routes/userRoute.js';
 import cookieParser from 'cookie-parser';
-dotenv.config()
+import cloudinary from 'cloudinary';
 
+dotenv.config()
 const app = express();
 
+//DB Connection
+connectDB()
  
+//cloudinary configur
+cloudinary.v2.config({
+    cloud_name : process.env.CLOUDINARY_NAME,
+    api_key : process.env.CLOUDINARY_API_KEY,
+    api_secret : process.env.CLOUDINARY_SECRET
+})
+
+
 
 //express middlewares 
 app.use(express.json());
@@ -22,8 +33,8 @@ app.use(cookieParser());
 //routes
 app.use('/api/users' , userRouter)
 
-//DB Connection
-connectDB()
+
+
 
 app.listen(process.env.PORT , ()=>{
     console.log(`Server listening on port ${process.env.PORT}`);
