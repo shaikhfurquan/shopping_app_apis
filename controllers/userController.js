@@ -91,6 +91,7 @@ export const loginUser = async (req, res) => {
 
 export const getUserProfile = async(req , res) =>{
     try {
+        //along with the token user will be created inside the req(req.user)
         const loginUser = await UserModel.findById(req.user._id).select("-password")
         res.status(200).json({
             success: true,
