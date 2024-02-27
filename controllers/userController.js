@@ -57,17 +57,18 @@ export const loginUser = async (req, res) => {
                 success: false,
                 message: "User not found, register first",
             })
-        }
+        } 
         //check password/compare password
         const isMatch = await user.comparePassword(password)
         if (!isMatch) {
-            res.status(500).json({
+            return res.status(500).json({
                 success: false,
                 message: "Invalid Credentials",
             })
         }
 
         const token = await generateToken(user)
+        user.password = undefined 
         res.status(201).cookie("token", token, {
             expires: new Date(Date.now() + 60 * 60 * 1000),
             secure: process.env.NODE_ENV === "development" ? true : false,
@@ -75,7 +76,7 @@ export const loginUser = async (req, res) => {
         }).json({
             success: true,
             message: `Welcome ${user.name}`,
-            user: user,
+            user: user, 
             token: token
         })
     } catch (error) {
@@ -89,14 +90,14 @@ export const loginUser = async (req, res) => {
 }
 
 
-export const getUserProfile = async(req , res) =>{
+export const getUserProfile = async (req, res) => {
     try {
         //along with the token user will be created inside the req(req.user)
         const loginUser = await UserModel.findById(req.user._id).select("-password")
         res.status(200).json({
             success: true,
-            message : 'User profile',
-            userPofile : loginUser
+            message: 'User profile',
+            userPofile: loginUser
 
         })
     } catch (error) {
@@ -110,10 +111,10 @@ export const getUserProfile = async(req , res) =>{
 
 
 
-export const logoutUser = async(req , res) => {
+export const logoutUser = async (req, res) => {
     try {
-        
-        res.status(200).cookie("token" , "" , {
+
+        res.status(200).cookie("token", "", {
             expires: new Date(Date.now()),
             secure: process.env.NODE_ENV === "development" ? true : false,
             httpOnly: process.env.NODE_ENV === "development" ? true : false,
@@ -129,3 +130,66 @@ export const logoutUser = async(req , res) => {
         })
     }
 }
+
+
+export const updateUserProfile = async (req, res) => {
+    try {
+        const user = await UserModel.findByIdAndUpdate(req.user._id, req.body, { new: true })
+
+        res.status(200).json({
+            success: true,
+            message: "Profile updated successfully",
+            user: user
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error while updating user profile",
+            error: error.message
+        })
+    }
+}
+
+
+export const updateUserPassword = async (req, res) => {
+    try {
+        const user = await UserModel.findById(req.user._id)
+
+        // getting oldPassword and newPassword for req.body
+        const { oldPassword, newPassword } = req.body
+        if (!oldPassword || !newPassword) {
+            return res.status(404).json({
+                success: false,
+                message: "Please provide old password and new password",
+            })
+        } 
+
+        console.log(oldPassword, newPassword);
+        // checking oldPassword
+        const isMatch = await user.comparePassword(oldPassword)
+        console.log("isMatch===>",isMatch);
+        if(!isMatch) {
+            return res.status(404).json({
+                success: false,
+                message : "Invalid old password"
+            })
+        }
+        //if all is good, replacing user.password(oldPassword) to newPassword, and we will save
+        user.password = newPassword
+        await user.save()
+
+        res.status(200).json({
+            success: true,
+            message: "Password updated successfully",
+            user: user
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error while updating user password",
+            error: error.message
+        })
+    }
+}
+
+
