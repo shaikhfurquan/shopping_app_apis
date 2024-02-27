@@ -22,6 +22,7 @@ POST ==> http://localhost:6060/api/users/login
 }
 
 
+
 LOGIN USER PROFILE
 GET  ==>  http://localhost:6060/api/users/profile
 
@@ -29,3 +30,19 @@ GET  ==>  http://localhost:6060/api/users/profile
 
 LOGIN USER PROFILE
 GET  ==>  http://localhost:6060/api/users/logout
+
+
+UPDATE USER PROFILE
+PUT  ==> http://localhost:6060/api/users/update-profile
+{
+    "name" : "sf",
+    "address" : "pune"
+}
+
+
+UPDATE PASSWORD
+PUT  ==>  http://localhost:6060/api/users/login
+{
+    "oldPassword" : "123456",
+    "newPassword" : "123456"
+}
