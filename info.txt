@@ -46,3 +46,8 @@ PUT  ==>  http://localhost:6060/api/users/login
     "oldPassword" : "123456",
     "newPassword" : "123456"
 }
+
+
+PUT  ==>  http://localhost:6060/api/users/update-picture
+In Postman key->file and value->select file  ==> then hit
+
