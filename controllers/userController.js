@@ -100,7 +100,6 @@ export const getUserProfile = async (req, res) => {
             success: true,
             message: 'User profile',
             userPofile: loginUser
-
         })
     } catch (error) {
         res.status(500).json({
