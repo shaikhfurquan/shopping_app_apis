@@ -6,6 +6,7 @@ import connectDB from './db/connectDB.js';
 import userRouter from './routes/userRoute.js';
 import cookieParser from 'cookie-parser';
 import cloudinary from 'cloudinary';
+import productRouter from './routes/productRoute.js';
 
 dotenv.config()
 const app = express();
@@ -32,6 +33,7 @@ app.use(cookieParser());
 
 //routes
 app.use('/api/users' , userRouter)
+app.use('/api/products' , productRouter)
 
 
 
