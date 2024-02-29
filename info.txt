@@ -110,3 +110,14 @@ curl --location --request PUT 'http://localhost:6060/api/products/update/pic/65e
 --header 'Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWRlMzU5ZmZiODFjZTM4YzFlYjcxZGEiLCJpYXQiOjE3MDkyMTQxNzksImV4cCI6MTcwOTgxODk3OX0.FBBAD8ijw7SU7EP_mDprPCs_Cp2k6FKgbwrtYRAX-Cg' \
 --form 'file=@"/C:/Users/intel/Downloads/free-images.jpg"'
 
+
+
+DELETE PRODUCT IMAGE
+DELETE  ==>  http://localhost:6060/api/products/delete/pic/65e0605322caba340050ee1c?imageId=65e09163fa30c8b9690fcd7b
+
+curl --location --request DELETE 'http://localhost:6060/api/products/delete/pic/65e0605322caba340050ee1c?imageId=65e09163fa30c8b9690fcd7b' \
+--header 'Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWRlMzU5ZmZiODFjZTM4YzFlYjcxZGEiLCJpYXQiOjE3MDkyMzAwMjIsImV4cCI6MTcwOTgzNDgyMn0.2Hy-9c8M_EpqIm-9GarbVQsQMbulOKkQi5cCU4aYS3Y'
+
+
+DELETE PRODUCT
+DELETE  ==>  http://localhost:6060/api/products/delete/65e0ce260b403cae96a13feb
