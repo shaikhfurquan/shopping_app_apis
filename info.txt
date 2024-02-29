@@ -1,5 +1,5 @@
 
-USERS
+USERS APIs:-
 
 CREATE USER
 POST  ==> http://localhost:6060/api/users/register
@@ -50,4 +50,63 @@ PUT  ==>  http://localhost:6060/api/users/login
 
 PUT  ==>  http://localhost:6060/api/users/update-picture
 In Postman key->file and value->select file  ==> then hit
+
+
+
+
+PRODUCTS APIs:-
+
+GET ALL PRODUCTS
+GET  ==>  http://localhost:6060/api/products/get-all
+
+
+
+GET SINGLE PRODUCT
+GET  ==>  http://localhost:6060/api/products/get/65e0605322caba340050ee1c
+
+
+CREATE PRODUCT
+POST  ==>  http://localhost:6060/api/products/create
+
+curl --location 'http://localhost:6060/api/products/create' \
+--header 'Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWRlMzU5ZmZiODFjZTM4YzFlYjcxZGEiLCJpYXQiOjE3MDkyMDMyODcsImV4cCI6MTcwOTgwODA4N30.eFs6D3JyUFCvpPoFiZcG4BK3iBm6B5QK1pgzIVfRrkY' \
+--form 'name="iphone"' \
+--form 'description="beautiful"' \
+--form 'price="54545"' \
+--form 'stock="15"' \
+--form 'category="mobile"' \
+--form 'file=@"/C:/Users/intel/Downloads/profile-8268938_640.webp"'
+
+[{"key":"name","value":"iphone","description":"","type":"text","enabled":true},{"key":"description","value":"beautiful","description":"","type":"text","enabled":true},{"key":"price","value":"54545","description":"","type":"text","enabled":true},{"key":"stock","value":"15","description":"","type":"text","enabled":true},{"key":"category","value":"mobile","description":"","type":"text","enabled":true},{"key":"file","description":"","type":"file","enabled":true,"value":["/C:/Users/intel/Downloads/profile-8268938_640.webp"],"fileNotInWorkingDirectoryWarning":"This file isn't in your working directory. Teammates you share this request with won't be able to use this file. To make collaboration easier you can setup your working directory in Settings.","filesNotInWorkingDirectory":["/C:/Users/intel/Downloads/profile-8268938_640.webp"]}]
+
+
+
+UPDATE PRODUCT BY Id
+PUT  ==>  http://localhost:6060/api/products/update/65e0605322caba340050ee1c
+
+req.body
+{
+    "name" : "Realme",
+    "description" : "Realme phone"
+}
+
+o/p:-
+curl --location --request PUT 'http://localhost:6060/api/products/update/65e0605322caba340050ee1c' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWRlMzU5ZmZiODFjZTM4YzFlYjcxZGEiLCJpYXQiOjE3MDkyMTQxNzksImV4cCI6MTcwOTgxODk3OX0.FBBAD8ijw7SU7EP_mDprPCs_Cp2k6FKgbwrtYRAX-Cg' \
+--data '{
+    "name" : "Realme",
+    "description" : "Realme phone"
+}'
+
+
+UPDATE PRODUCT IMAGE
+PUT  ==>  http://localhost:6060/api/products/update/pic/65e0605322caba340050ee1c
+
+[{"key":"file","description":"","type":"file","enabled":true,"value":["/C:/Users/intel/Downloads/free-images.jpg"],"fileNotInWorkingDirectoryWarning":"This file isn't in your working directory. Teammates you share this request with won't be able to use this file. To make collaboration easier you can setup your working directory in Settings.","filesNotInWorkingDirectory":["/C:/Users/intel/Downloads/free-images.jpg"]}]
+
+O/P:-
+curl --location --request PUT 'http://localhost:6060/api/products/update/pic/65e0605322caba340050ee1c' \
+--header 'Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWRlMzU5ZmZiODFjZTM4YzFlYjcxZGEiLCJpYXQiOjE3MDkyMTQxNzksImV4cCI6MTcwOTgxODk3OX0.FBBAD8ijw7SU7EP_mDprPCs_Cp2k6FKgbwrtYRAX-Cg' \
+--form 'file=@"/C:/Users/intel/Downloads/free-images.jpg"'
 
