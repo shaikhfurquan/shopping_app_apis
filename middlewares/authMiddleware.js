@@ -11,11 +11,11 @@ export const isAuthenticated = async (req, res, next) => {
                 message: "Unauthenticated User"
             })
         }
-        
+
         //if we found a token then we will decode/verify it
         const decodedUserData = JWT.verify(token, process.env.JWT_SECRET)
         // console.log("decodedUserData==>" , decodedUserData);
-        
+
         //after this process we will get a user in req.user
         req.user = await UserModel.findById(decodedUserData._id)
         // console.log("user",req.user);
