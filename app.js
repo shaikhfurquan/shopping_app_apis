@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser';
 import cloudinary from 'cloudinary';
 import productRouter from './routes/productRoute.js';
 import categoryRouter from './routes/categoryRoute.js';
+import orderRouter from './routes/orderRoute.js';
 
 dotenv.config()
 const app = express();
@@ -36,6 +37,7 @@ app.use(cookieParser());
 app.use('/api/users' , userRouter)
 app.use('/api/products' , productRouter)
 app.use('/api/category' , categoryRouter)
+app.use('/api/order' , orderRouter)
 
 
 
