@@ -41,7 +41,7 @@ PUT  ==> http://localhost:6060/api/users/update-profile
 
 
 UPDATE PASSWORD
-PUT  ==>  http://localhost:6060/api/users/login
+PUT  ==>  http://localhost:6060/api/users/update-password
 {
     "oldPassword" : "123456",
     "newPassword" : "123456"
@@ -134,6 +134,17 @@ POST  ==>  http://localhost:6060/api/category/create
     "category" : "Laptops"
 }
 
+
 GET ALL CATEGORIES
 GET  ==>  http://localhost:6060/api/category/get-all
 
+
+DELETE CATEGORY
+DELETE  ==>  http://localhost:6060/api/category/delete/65e30e4156ff55ea6ec5228e
+
+
+UPDATE CATEGORY
+PUT  ==>  http://localhost:6060/api/category/update/65e30ecb44858ac16d471829
+{
+    "updatedCategory" : "kids & fashion"
+}
