@@ -54,6 +54,7 @@ In Postman key->file and value->select file  ==> then hit
 
 
 
+
 PRODUCTS APIs:-
 
 GET ALL PRODUCTS
@@ -126,7 +127,9 @@ DELETE  ==>  http://localhost:6060/api/products/delete/65e0ce260b403cae96a13feb
 
 
 
-CATEGORY
+
+
+CATEGORY APIs:-
 
 CREATE CATEGORY 
 POST  ==>  http://localhost:6060/api/category/create
@@ -148,3 +151,71 @@ PUT  ==>  http://localhost:6060/api/category/update/65e30ecb44858ac16d471829
 {
     "updatedCategory" : "kids & fashion"
 }
+
+
+GET MY ORDERS
+GET  ==>  http://localhost:6060/api/order/my-orders
+
+
+GET MY ORDER WITH ID
+GET  ==>  http://localhost:6060/api/order/my-orders/65e37a86d850a557574b2866
+
+
+
+
+
+
+
+
+
+ORDERS APIs:-
+CREATE ORDER
+POST  ==>  http://localhost:6060/api/order/create
+{
+    "shippingInfo": {
+      "address": "123 Main Street",
+      "city": "Example City",
+      "country": "Example Country"
+    },
+    "orderItems": [
+      {
+        "name": "Product 1",
+        "price": 19.99,
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/dmmrlwkys/image/upload/v1709231761/dg7rd27mumxhg7srffem.webp",
+        "product": "65e0605322caba340050ee1c"
+      }
+    ],
+    
+    "itemPrice": 2000,
+    "tax": 5,
+    "shippingCharges": 10,
+    "totalAmount": 20015
+  }
+  
+  curl request:
+  curl --location 'http://localhost:6060/api/order/create' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWRlMzU5ZmZiODFjZTM4YzFlYjcxZGEiLCJpYXQiOjE3MDk0MDY4MTAsImV4cCI6MTcxMDAxMTYxMH0.cwWVCO_TQsvfanVDj_AiypBo7qFCcoX0bFmLntmdzqs' \
+--data '{
+    "shippingInfo": {
+      "address": "123 Main Street",
+      "city": "Example City",
+      "country": "Example Country"
+    },
+    "orderItems": [
+      {
+        "name": "Product 1",
+        "price": 19.99,
+        "quantity": 2,
+        "image": "https://res.cloudinary.com/dmmrlwkys/image/upload/v1709231761/dg7rd27mumxhg7srffem.webp",
+        "product": "65e0605322caba340050ee1c"
+      }
+    ],
+    
+    "itemPrice": 2000,
+    "tax": 5,
+    "shippingCharges": 10,
+    "totalAmount": 20015
+  }
+  '
