@@ -28,7 +28,7 @@ GET  ==>  http://localhost:6060/api/users/profile
 
 
 
-LOGIN USER PROFILE
+LOGOUT USER PROFILE
 GET  ==>  http://localhost:6060/api/users/logout
 
 
@@ -121,3 +121,19 @@ curl --location --request DELETE 'http://localhost:6060/api/products/delete/pic/
 
 DELETE PRODUCT
 DELETE  ==>  http://localhost:6060/api/products/delete/65e0ce260b403cae96a13feb
+
+
+
+
+
+CATEGORY
+
+CREATE CATEGORY 
+POST  ==>  http://localhost:6060/api/category/create
+{
+    "category" : "Laptops"
+}
+
+GET ALL CATEGORIES
+GET  ==>  http://localhost:6060/api/category/get-all
+
