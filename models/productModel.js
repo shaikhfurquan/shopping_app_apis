@@ -16,11 +16,14 @@ const productSchema = new mongoose.Schema({
     stock : {
         type : String,
         required : [true, 'Product stock is required'],
-
     },
+    // quantity : {
+    //     type : String,
+    //     required : [true, 'Product quantity is required'],
+    // },
     category : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : 'Category'
+        ref : 'Category' 
     },
     images : [
         {
