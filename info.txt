@@ -219,3 +219,7 @@ POST  ==>  http://localhost:6060/api/order/create
     "totalAmount": 20015
   }
   '
+
+
+ORDERS BY ADMIN
+GET  ==>  http://localhost:6060/api/order/admin/get-all-orders
