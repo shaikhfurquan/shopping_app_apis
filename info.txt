@@ -223,3 +223,7 @@ POST  ==>  http://localhost:6060/api/order/create
 
 ORDERS BY ADMIN
 GET  ==>  http://localhost:6060/api/order/admin/get-all-orders
+
+
+CHANGE ORDER STATUS BY ADMIN
+PUT ==> http://localhost:6060/api/order/admin/change-status/65e37a86d850a557574b2866

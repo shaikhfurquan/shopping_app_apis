@@ -126,18 +126,57 @@ export const acceptPayment = async (req, res) => {
 
 
 // working on admin section
-export const getAllOrders = async(req, res) => {
+export const getAllOrders = async (req, res) => {
     try {
         //finding all orders
         const orders = await OrderModel.find({})
         res.status(200).json({
-            success : true,
-            message : "All orders data",
-            totalOrderCount : orders.length,
-            orders : orders
+            success: true,
+            message: "All orders data",
+            totalOrderCount: orders.length,
+            orders: orders
         })
     } catch (error) {
         handleErrorMiddlewareFunction(res, 500, 'Error while getting All orders', error);
-        
+
+    }
+}
+
+
+export const changeOrderStatus = async (req, res) => {
+    try {
+        //finding all orders
+        let order = await OrderModel.findById(req.params.id)
+        if (!order) {
+            res.status(404).json({
+                success: false,
+                message: "Order not found"
+            })
+        }
+        //if we found the order then we will change the order status
+        if (order.orderStatus === 'processing') {
+            order.orderStatus = 'shipped'
+        } else if (order.orderStatus === 'shipped') {
+            order.orderStatus = 'deliverd'
+            order.deliverdAt = Date.now()
+        } else {
+            return res.status(500).json({
+                success: false,
+                message: 'Order already deliverd'
+            })
+        }
+        await order.save()
+
+        res.status(200).json({
+            success: true,
+            message: "Order status updated successfully",
+            order: order
+        })
+    } catch (error) {
+        if (error.name === 'CastError') {
+            return handleCastErrorMiddlewareFunction(res, 'Invalid Id');
+        }
+        handleErrorMiddlewareFunction(res, 500, 'Error while updating order status', error);
+
     }
 }
