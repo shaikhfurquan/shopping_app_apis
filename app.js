@@ -2,10 +2,11 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
+import cloudinary from 'cloudinary';
+import Stripe from 'stripe';
 import connectDB from './db/connectDB.js';
 import userRouter from './routes/userRoute.js';
 import cookieParser from 'cookie-parser';
-import cloudinary from 'cloudinary';
 import productRouter from './routes/productRoute.js';
 import categoryRouter from './routes/categoryRoute.js';
 import orderRouter from './routes/orderRoute.js';
@@ -16,6 +17,10 @@ const app = express();
 //DB Connection
 connectDB()
  
+
+//stripe configuration
+export const stripe = new Stripe(process.env.STRIPE_API_SECRET)
+
 //cloudinary configur
 cloudinary.v2.config({
     cloud_name : process.env.CLOUDINARY_NAME,

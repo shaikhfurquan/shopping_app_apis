@@ -2,6 +2,7 @@ import CategoryModel from "../models/categoryModel.js";
 import { handleCastErrorMiddlewareFunction, handleErrorMiddlewareFunction } from "../middlewares/handleError.js";
 import ProductModel from '../models/productModel.js'
 import OrderModel from "../models/orderModel.js";
+import { stripe } from "../app.js";
 
 
 export const createOrder = async (req, res) => {
@@ -21,7 +22,7 @@ export const createOrder = async (req, res) => {
         })
 
         // stock update
-        for(let i = 0; i < orderItems.length; i++) {
+        for (let i = 0; i < orderItems.length; i++) {
             // finding product updating the stock(by minus)
             const product = await ProductModel.findById(orderItems[i].product)
             product.stock -= orderItems[i].quantity
@@ -43,20 +44,20 @@ export const createOrder = async (req, res) => {
 export const getMyOrders = async (req, res) => {
     try {
         //finding orders on the basis of userId
-        const orders = await OrderModel.find({user : req.user._id})
+        const orders = await OrderModel.find({ user: req.user._id })
 
-        if(!orders){
+        if (!orders) {
             return res.status(404).json({
-                successs : false,
-                messagee : "No order found"
+                successs: false,
+                messagee: "No order found"
             })
         }
 
         res.status(200).json({
             successs: true,
             message: "Your orders fetch successfully",
-            totalOrder : orders.length,
-            orders : orders
+            totalOrder: orders.length,
+            orders: orders
         })
 
     } catch (error) {
@@ -71,17 +72,17 @@ export const getSingleOrder = async (req, res) => {
         //finding orders on the basis of userId
         const order = await OrderModel.findById(req.params.id)
 
-        if(!order){
+        if (!order) {
             return res.status(404).json({
-                successs : false,
-                messagee : "No order found with this Id"
+                successs: false,
+                messagee: "No order found with this Id"
             })
         }
 
         res.status(200).json({
             successs: true,
             message: "Your order fetch successfully",
-            order : order
+            order: order
         })
 
     } catch (error) {
@@ -95,5 +96,48 @@ export const getSingleOrder = async (req, res) => {
 
 
 
+export const acceptPayment = async (req, res) => {
+    try {
+        //getting total amount from user
+        const { totalAmount } = req.body
+        if (!totalAmount || isNaN(totalAmount)) {
+            return res.status(404).json({
+                success: false,
+                message: "Total amount is required"
+            })
+        }
+
+        const { client_secret } = await stripe.paymentIntents.create({
+            amount: Number(totalAmount * 100),
+            // currency : 'usd'
+            currency: 'INR'
+        })
+        res.status(200).json({
+            success: true,
+            message: 'Payment successful',
+            Id: client_secret
+
+        })
+    } catch (error) {
+        handleErrorMiddlewareFunction(res, 500, 'Error while paymet processing', error);
+
+    }
+}
 
 
+// working on admin section
+export const getAllOrders = async(req, res) => {
+    try {
+        //finding all orders
+        const orders = await OrderModel.find({})
+        res.status(200).json({
+            success : true,
+            message : "All orders data",
+            totalOrderCount : orders.length,
+            orders : orders
+        })
+    } catch (error) {
+        handleErrorMiddlewareFunction(res, 500, 'Error while getting All orders', error);
+        
+    }
+}
