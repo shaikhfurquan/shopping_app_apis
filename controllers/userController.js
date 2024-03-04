@@ -6,14 +6,14 @@ import cloudinary from 'cloudinary'
 
 export const registerUser = async (req, res) => {
     try {
-        const { name, email, password, address, city, country, phone } = req.body
-        if (!name || !email || !password || !address || !city || !country || !phone) {
-            return res.status(404).json({
-                success: false,
-                message: "All fields are required",
+        const { name, email, password, address, city, country, phone, answer } = req.body
+        // if (!name || !email || !password || !address || !city || !country || !phone || !answer) {
+        //     return res.status(404).json({
+        //         success: false,
+        //         message: "All fields are required",
 
-            })
-        }
+        //     })
+        // }
 
         //checking if the user is already exists or not
         const existingUser = await UserModel.findOne({ email })
@@ -23,7 +23,7 @@ export const registerUser = async (req, res) => {
                 message: "User already exists, please login"
             })
         }
-        const newUser = await UserModel.create({ name, email, password, address, city, country, phone })
+        const newUser = await UserModel.create({ name, email, password, address, city, country, phone, answer })
 
         res.status(201).json({
             success: true,
@@ -192,6 +192,41 @@ export const updateUserPassword = async (req, res) => {
 }
 
 
+export const resetUserPassword = async (req, res) => {
+    try {
+
+        const { email, newPassword, answer } = req.body
+        if (!email || !newPassword || !answer) {
+            return res.status(404).json({
+                success: false,
+                message: "All fields are required"
+            })
+        }
+        //finding user
+        const user = await UserModel.findOne({ email, answer })
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "Invalid user or answer"
+            })
+        }
+        user.password = newPassword
+        await user.save()
+        res.status(200).json({
+            success: true,
+            message: "Password has been reset successfully, Please login",
+            user: user
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error while reset user password",
+            error: error.message
+        })
+    }
+}
+
+
 export const updateProfilePicture = async (req, res) => {
     try {
         //finding user
@@ -203,8 +238,8 @@ export const updateProfilePicture = async (req, res) => {
         //updating the profile picture
         const cloudinary_db = await cloudinary.v2.uploader.upload(file.content)
         user.profilePic = {
-            public_id : cloudinary_db.public_id,
-            url : cloudinary_db.secure_url
+            public_id: cloudinary_db.public_id,
+            url: cloudinary_db.secure_url
         }
         //saving user
         user.save()
