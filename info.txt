@@ -52,13 +52,21 @@ PUT  ==>  http://localhost:6060/api/users/update-picture
 In Postman key->file and value->select file  ==> then hit
 
 
-
+********************************************************************************************************************************
+********************************************************************************************************************************
 
 
 PRODUCTS APIs:-
 
 GET ALL PRODUCTS
 GET  ==>  http://localhost:6060/api/products/get-all
+          http://localhost:6060/api/products/get-all?keyword=20
+          http://localhost:6060/api/products/get-all?keyword=lenovo
+
+
+
+GET TOP THREE PRODUCTS
+GET  ==>  http://localhost:6060/api/products/get-top
 
 
 
@@ -66,19 +74,22 @@ GET SINGLE PRODUCT
 GET  ==>  http://localhost:6060/api/products/get/65e0605322caba340050ee1c
 
 
+
+
 CREATE PRODUCT
 POST  ==>  http://localhost:6060/api/products/create
 
 curl --location 'http://localhost:6060/api/products/create' \
---header 'Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWRlMzU5ZmZiODFjZTM4YzFlYjcxZGEiLCJpYXQiOjE3MDkyMDMyODcsImV4cCI6MTcwOTgwODA4N30.eFs6D3JyUFCvpPoFiZcG4BK3iBm6B5QK1pgzIVfRrkY' \
---form 'name="iphone"' \
---form 'description="beautiful"' \
---form 'price="54545"' \
---form 'stock="15"' \
---form 'category="mobile"' \
+--header 'Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWRlMzU5ZmZiODFjZTM4YzFlYjcxZGEiLCJpYXQiOjE3MDk2MjA4NDUsImV4cCI6MTcxMDIyNTY0NX0.UbUUCN7mmEvgTyP8l7sXHu6WLMm79kiQWeyxUOGCiNo' \
+--form 'name="Moto"' \
+--form 'description="kids"' \
+--form 'price="39000"' \
+--form 'stock="5"' \
+--form 'category="65e21e160d75be8cfefc6ea8"' \
 --form 'file=@"/C:/Users/intel/Downloads/profile-8268938_640.webp"'
 
-[{"key":"name","value":"iphone","description":"","type":"text","enabled":true},{"key":"description","value":"beautiful","description":"","type":"text","enabled":true},{"key":"price","value":"54545","description":"","type":"text","enabled":true},{"key":"stock","value":"15","description":"","type":"text","enabled":true},{"key":"category","value":"mobile","description":"","type":"text","enabled":true},{"key":"file","description":"","type":"file","enabled":true,"value":["/C:/Users/intel/Downloads/profile-8268938_640.webp"],"fileNotInWorkingDirectoryWarning":"This file isn't in your working directory. Teammates you share this request with won't be able to use this file. To make collaboration easier you can setup your working directory in Settings.","filesNotInWorkingDirectory":["/C:/Users/intel/Downloads/profile-8268938_640.webp"]}]
+[{"key":"name","value":"iphone","description":"","type":"text","enabled":true},{"key":"description","value":"beautiful","description":"","type":"text","enabled":true},{"key":"price","value":"54545","description":"","type":"text","enabled":true},{"key":"stock","value":"15","description":"","type":"text","enabled":true},{"key":"category","value":"65e21e160d75be8cfefc6ea8","description":"","type":"text","enabled":true},{"key":"file","description":"","type":"file","enabled":true,"value":["/C:/Users/intel/Downloads/profile-8268938_640.webp"],"fileNotInWorkingDirectoryWarning":"This file isn't in your working directory. Teammates you share this request with won't be able to use this file. To make collaboration easier you can setup your working directory in Settings.","filesNotInWorkingDirectory":["/C:/Users/intel/Downloads/profile-8268938_640.webp"]}]
+
 
 
 
@@ -126,7 +137,8 @@ DELETE  ==>  http://localhost:6060/api/products/delete/65e0ce260b403cae96a13feb
 
 
 
-
+********************************************************************************************************************************
+********************************************************************************************************************************
 
 
 CATEGORY APIs:-
@@ -138,8 +150,12 @@ POST  ==>  http://localhost:6060/api/category/create
 }
 
 
+
+
 GET ALL CATEGORIES
 GET  ==>  http://localhost:6060/api/category/get-all
+                
+
 
 
 DELETE CATEGORY
@@ -163,6 +179,8 @@ GET  ==>  http://localhost:6060/api/order/my-orders/65e37a86d850a557574b2866
 
 
 
+********************************************************************************************************************************
+********************************************************************************************************************************
 
 
 
@@ -236,4 +254,12 @@ POST ==> http://localhost:6060/api/users/reset-password
     "email" : "user@gmail.com",
     "answer" : "GTA",
     "newPassword" : "123456"
+}
+
+
+ADD PRODUCT REVIEW
+http://localhost:6060/api/products/65e56c5dea82fadfe8107614/review
+{
+    "comment" : "Nice Product",
+    "rating" : 5
 }
