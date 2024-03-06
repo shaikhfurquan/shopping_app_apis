@@ -6,8 +6,15 @@ import { getDataUri } from "../utils/features.js"
 
 
 export const getAllProducts = async (req, res) => {
+    const { keyword , category} = req.query
     try {
-        const getAllProducts = await ProductModel.find()
+        const getAllProducts = await ProductModel.find({
+            name : {
+                $regex : keyword ? keyword : '',
+                $options : "i"
+            },
+            
+        }).populate('category')
         res.status(200).json({
             successs: true,
             message: "Products fetch successfully",
@@ -17,6 +24,28 @@ export const getAllProducts = async (req, res) => {
     } catch (error) {
         handleErrorMiddlewareFunction(res, 500, 'Error while getting all products', error);
 
+    }
+}
+
+
+export const getTopProducts = async (req, res) => {
+    try {
+        //finding products on the basis of rating
+        const products = await ProductModel.find({}).sort({rating : -1}).limit(3)
+        if (!products) {
+            return res.status(404).json({
+                success: false,
+                message: 'Product not found'
+            })
+        }
+        res.status(200).json({
+            successs: true,
+            message: "Top 3 product fetch successfully",
+            productsCount: products.length,
+            products: products
+        })
+    } catch (error) {
+        handleErrorMiddlewareFunction(res, 500, 'Error while getting top products', error);
     }
 }
 
@@ -68,7 +97,7 @@ export const createProduct = async (req, res) => {
             url: cloudinary_db.secure_url
         }
         const createProduct = await ProductModel.create({
-            name, description, price, stock, images: [image]
+            name, description, price, stock, category ,images: [image]
         })
         res.status(201).json({
             success: true,
@@ -215,6 +244,51 @@ export const deleteProduct = async (req, res) => {
             return handleCastErrorMiddlewareFunction(res, 'Invalid Id');
         }
         handleErrorMiddlewareFunction(res, 500, 'Error while deleting product picture', error);
+    }
+}
+
+
+export const updateProductReview = async (req, res) => {
+    try {
+        //getting comments and review from user
+        const {comment , rating} = req.body
+        //finding product
+        const product = await ProductModel.findById(req.params.id)
+        //checking previous reviews
+        const alreadyReview = product.reviews.find( (r) => r.user.toString() === req.user._id.toString())
+        if(alreadyReview){
+            return res.status(400).json({
+                success : false,
+                message : "Product already reviewed"
+            })
+        }
+
+        // if not creating review
+        const createReview = {
+            name : req.user.name,
+            rating : Number(rating),
+            comment : comment,
+            user : req.user._id
+        }
+        
+        // now we will push createReview to the reviews array
+        product.reviews.push(createReview)
+        product.numOfReviews = product.reviews.length
+
+        // rating
+        product.rating = product.reviews.reduce((acc, item) => item.rating + acc , 0 ) / product.reviews.length
+
+        //save
+        await product.save()
+        res.status(200).json({
+            success: true,
+            message: 'Product Review added successfully'
+        })
+    } catch (error) {
+        if (error.name === 'CastError') {
+            return handleCastErrorMiddlewareFunction(res, 'Invalid Id');
+        }
+        handleErrorMiddlewareFunction(res, 500, 'Error while updating product review', error);
     }
 }
 
