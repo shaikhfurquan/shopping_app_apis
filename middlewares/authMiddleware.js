@@ -25,8 +25,7 @@ export const isAuthenticated = async (req, res, next) => {
         res.status(500).json({
             success: false,
             message: "Error while authenticating user",
-            error: error.message,
-            decodedUserData
+            error: error.message
         })
     }
 }
