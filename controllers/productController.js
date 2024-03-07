@@ -1,4 +1,4 @@
-import { handleCastErrorMiddlewareFunction, handleErrorMiddlewareFunction } from "../middlewares/handleError.js";
+import { handleCastErrorFunction, handleErrorFunction } from "../helper/handleError.js";
 import ProductModel from '../models/productModel.js'
 import cloudinary from 'cloudinary';
 import { getDataUri } from "../utils/features.js"
@@ -22,7 +22,7 @@ export const getAllProducts = async (req, res) => {
             AllProducts: getAllProducts,
         })
     } catch (error) {
-        handleErrorMiddlewareFunction(res, 500, 'Error while getting all products', error);
+        handleErrorFunction(res, 500, 'Error while getting all products', error);
 
     }
 }
@@ -45,7 +45,7 @@ export const getTopProducts = async (req, res) => {
             products: products
         })
     } catch (error) {
-        handleErrorMiddlewareFunction(res, 500, 'Error while getting top products', error);
+        handleErrorFunction(res, 500, 'Error while getting top products', error);
     }
 }
 
@@ -66,9 +66,9 @@ export const getSingleProduct = async (req, res) => {
         })
     } catch (error) {
         if (error.name === 'CastError') {
-            return handleCastErrorMiddlewareFunction(res, 'Invalid Id');
+            return handleCastErrorFunction(res, 'Invalid Id');
         }
-        handleErrorMiddlewareFunction(res, 500, 'Error while getting a product', error);
+        handleErrorFunction(res, 500, 'Error while getting a product', error);
 
     }
 }
@@ -106,7 +106,7 @@ export const createProduct = async (req, res) => {
         })
 
     } catch (error) {
-        handleErrorMiddlewareFunction(res, 500, 'Error while creating a product', error);
+        handleErrorFunction(res, 500, 'Error while creating a product', error);
     }
 }
 
@@ -129,9 +129,9 @@ export const updateProduct = async (req, res) => {
 
     } catch (error) {
         if (error.name === 'CastError') {
-            return handleCastErrorMiddlewareFunction(res, 'Invalid Id');
+            return handleCastErrorFunction(res, 'Invalid Id');
         }
-        handleErrorMiddlewareFunction(res, 500, 'Error while updating a product', error);
+        handleErrorFunction(res, 500, 'Error while updating a product', error);
     }
 }
 
@@ -166,9 +166,9 @@ export const updateProductPicture = async (req, res) => {
         })
     } catch (error) {
         if (error.name === 'CastError') {
-            return handleCastErrorMiddlewareFunction(res, 'Invalid Id');
+            return handleCastErrorFunction(res, 'Invalid Id');
         }
-        handleErrorMiddlewareFunction(res, 500, 'Error while updating  product picture', error);
+        handleErrorFunction(res, 500, 'Error while updating  product picture', error);
     }
 }
 
@@ -212,9 +212,9 @@ export const deleteProductPicture = async (req, res) => {
         })
     } catch (error) {
         if (error.name === 'CastError') {
-            return handleCastErrorMiddlewareFunction(res, 'Invalid Id');
+            return handleCastErrorFunction(res, 'Invalid Id');
         }
-        handleErrorMiddlewareFunction(res, 500, 'Error while deleting product picture', error);
+        handleErrorFunction(res, 500, 'Error while deleting product picture', error);
     }
 }
 
@@ -241,9 +241,9 @@ export const deleteProduct = async (req, res) => {
         })
     } catch (error) {
         if (error.name === 'CastError') {
-            return handleCastErrorMiddlewareFunction(res, 'Invalid Id');
+            return handleCastErrorFunction(res, 'Invalid Id');
         }
-        handleErrorMiddlewareFunction(res, 500, 'Error while deleting product picture', error);
+        handleErrorFunction(res, 500, 'Error while deleting product picture', error);
     }
 }
 
@@ -286,9 +286,9 @@ export const updateProductReview = async (req, res) => {
         })
     } catch (error) {
         if (error.name === 'CastError') {
-            return handleCastErrorMiddlewareFunction(res, 'Invalid Id');
+            return handleCastErrorFunction(res, 'Invalid Id');
         }
-        handleErrorMiddlewareFunction(res, 500, 'Error while updating product review', error);
+        handleErrorFunction(res, 500, 'Error while updating product review', error);
     }
 }
 

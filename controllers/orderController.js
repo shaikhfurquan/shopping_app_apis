@@ -1,5 +1,5 @@
 import CategoryModel from "../models/categoryModel.js";
-import { handleCastErrorMiddlewareFunction, handleErrorMiddlewareFunction } from "../middlewares/handleError.js";
+import { handleCastErrorFunction, handleErrorFunction } from "../helper/handleError.js";
 import ProductModel from '../models/productModel.js'
 import OrderModel from "../models/orderModel.js";
 import { stripe } from "../app.js";
@@ -35,7 +35,7 @@ export const createOrder = async (req, res) => {
         })
 
     } catch (error) {
-        handleErrorMiddlewareFunction(res, 500, 'Error while placing Order', error);
+        handleErrorFunction(res, 500, 'Error while placing Order', error);
 
     }
 }
@@ -61,7 +61,7 @@ export const getMyOrders = async (req, res) => {
         })
 
     } catch (error) {
-        handleErrorMiddlewareFunction(res, 500, 'Error while getting your Order', error);
+        handleErrorFunction(res, 500, 'Error while getting your Order', error);
 
     }
 }
@@ -87,9 +87,9 @@ export const getSingleOrder = async (req, res) => {
 
     } catch (error) {
         if (error.name === 'CastError') {
-            return handleCastErrorMiddlewareFunction(res, 'Invalid Id');
+            return handleCastErrorFunction(res, 'Invalid Id');
         }
-        handleErrorMiddlewareFunction(res, 500, 'Error while getting your Order', error);
+        handleErrorFunction(res, 500, 'Error while getting your Order', error);
 
     }
 }
@@ -119,7 +119,7 @@ export const acceptPayment = async (req, res) => {
 
         })
     } catch (error) {
-        handleErrorMiddlewareFunction(res, 500, 'Error while paymet processing', error);
+        handleErrorFunction(res, 500, 'Error while paymet processing', error);
 
     }
 }
@@ -137,7 +137,7 @@ export const getAllOrders = async (req, res) => {
             orders: orders
         })
     } catch (error) {
-        handleErrorMiddlewareFunction(res, 500, 'Error while getting All orders', error);
+        handleErrorFunction(res, 500, 'Error while getting All orders', error);
 
     }
 }
@@ -174,9 +174,9 @@ export const changeOrderStatus = async (req, res) => {
         })
     } catch (error) {
         if (error.name === 'CastError') {
-            return handleCastErrorMiddlewareFunction(res, 'Invalid Id');
+            return handleCastErrorFunction(res, 'Invalid Id');
         }
-        handleErrorMiddlewareFunction(res, 500, 'Error while updating order status', error);
+        handleErrorFunction(res, 500, 'Error while updating order status', error);
 
     }
 }

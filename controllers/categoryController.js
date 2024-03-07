@@ -1,5 +1,5 @@
 import CategoryModel from "../models/categoryModel.js";
-import { handleCastErrorMiddlewareFunction, handleErrorMiddlewareFunction } from "../middlewares/handleError.js";
+import { handleCastErrorFunction, handleErrorFunction } from "../helper/handleError.js";
 import ProductModel from '../models/productModel.js'
 
 
@@ -23,7 +23,7 @@ export const createCategory = async (req, res) => {
         })
 
     } catch (error) {
-        handleErrorMiddlewareFunction(res, 500, 'Error while creating category', error);
+        handleErrorFunction(res, 500, 'Error while creating category', error);
 
     }
 }
@@ -45,7 +45,7 @@ export const getAllCategories = async (req, res) => {
             AllCategories: getAllCategories,
         })
     } catch (error) {
-        handleErrorMiddlewareFunction(res, 500, 'Error while getting all category', error);
+        handleErrorFunction(res, 500, 'Error while getting all category', error);
 
     }
 }
@@ -68,9 +68,9 @@ export const getSingleCategory = async (req, res) => {
         })
     } catch (error) {
         if (error.name === 'CastError') {
-          return handleCastErrorMiddlewareFunction(res, 'Invalid Id');
+          return handleCastErrorFunction(res, 'Invalid Id');
         }
-        handleErrorMiddlewareFunction(res, 500, 'Error while getting single category', error);
+        handleErrorFunction(res, 500, 'Error while getting single category', error);
 
     }
 }
@@ -107,9 +107,9 @@ export const updateCategory = async (req, res) => {
         
     } catch (error) {
         if (error.name === 'CastError') {
-            return handleCastErrorMiddlewareFunction(res, 'Invalid Id');
+            return handleCastErrorFunction(res, 'Invalid Id');
         }
-        handleErrorMiddlewareFunction(res, 500, 'Error while updating category', error);
+        handleErrorFunction(res, 500, 'Error while updating category', error);
 
     }
 }
@@ -138,9 +138,9 @@ export const deleteCategory = async (req, res) => {
         })
     } catch (error) {
         if (error.name === 'CastError') {
-            return handleCastErrorMiddlewareFunction(res, 'Invalid Id');
+            return handleCastErrorFunction(res, 'Invalid Id');
         }
-        handleErrorMiddlewareFunction(res, 500, 'Error while deleting category', error);
+        handleErrorFunction(res, 500, 'Error while deleting category', error);
 
     }
 }
