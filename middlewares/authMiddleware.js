@@ -17,7 +17,7 @@ export const isAuthenticated = async (req, res, next) => {
         const decodedUserData = JWT.verify(token, process.env.JWT_SECRET)
         // console.log("decodedUserData==>" , decodedUserData);
 
-        //after this process we will get a user in req.user
+        //after this process we will get a user in req.user/ Attach user information to the request for further processing
         req.user = await UserModel.findById(decodedUserData._id)
         // console.log("user",req.user);
         next()
@@ -25,8 +25,7 @@ export const isAuthenticated = async (req, res, next) => {
         res.status(500).json({
             success: false,
             message: "Error while authenticating user",
-            error: error.message,
-            decodedUserData
+            error: error.message
         })
     }
 }
