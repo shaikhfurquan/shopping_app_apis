@@ -11,6 +11,7 @@ This repository contains the API documentation for a User, Product, Category, an
   - [Logout User Profile](#logout-user-profile)
   - [Update User Profile](#update-user-profile)
   - [Update Password](#update-password)
+  - [Reset Password](#reset-password)
   - [Update Profile Picture](#update-profile-picture)
 
 - [Products APIs](#products-apis)
@@ -20,6 +21,7 @@ This repository contains the API documentation for a User, Product, Category, an
   - [Create Product](#create-product)
   - [Update Product by ID](#update-product-by-id)
   - [Update Product Image](#update-product-image)
+  - [Add Product Review](#add-product-review)
   - [Delete Product Image](#delete-product-image)
   - [Delete Product](#delete-product)
 
@@ -36,8 +38,7 @@ This repository contains the API documentation for a User, Product, Category, an
   - [Admin: Get All Orders](#admin-get-all-orders)
   - [Admin: Change Order Status](#admin-change-order-status)
 
-- [Reset Password](#reset-password)
-- [Add Product Review](#add-product-review)
+
 
 ---
 
@@ -87,6 +88,17 @@ This repository contains the API documentation for a User, Product, Category, an
 {
   "oldPassword": "123456",
   "newPassword": "654321"
+}
+```
+
+
+## Reset Password
+**POST** `http://localhost:6060/api/users/reset-password`
+```json
+{
+  "email": "user@example.com",
+  "answer": "YourAnswer",
+  "newPassword": "newpassword123"
 }
 ```
 
@@ -143,6 +155,17 @@ curl --location --request PUT 'http://localhost:6060/api/products/update/pic/{pr
 
 ### Delete Product Image
 **DELETE** `http://localhost:6060/api/products/delete/pic/{productId}?imageId={imageId}`
+
+
+## Add Product Review
+**POST** `http://localhost:6060/api/products/{productId}/review`
+```json
+{
+  "comment": "Great product!",
+  "rating": 5
+}
+```
+
 
 ### Delete Product
 **DELETE** `http://localhost:6060/api/products/delete/{productId}`
@@ -214,28 +237,6 @@ curl --location --request PUT 'http://localhost:6060/api/products/update/pic/{pr
 ### Admin: Change Order Status
 **PUT** `http://localhost:6060/api/order/admin/change-status/{orderId}`
 
----
-
-## Reset Password
-**POST** `http://localhost:6060/api/users/reset-password`
-```json
-{
-  "email": "user@example.com",
-  "answer": "YourAnswer",
-  "newPassword": "newpassword123"
-}
-```
-
----
-
-## Add Product Review
-**POST** `http://localhost:6060/api/products/{productId}/review`
-```json
-{
-  "comment": "Great product!",
-  "rating": 5
-}
-```
 
 ---
 

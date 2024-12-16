@@ -48,6 +48,16 @@ PUT  ==>  http://localhost:6060/api/users/update-password
 }
 
 
+RESET USER PASSWORD
+POST ==> http://localhost:6060/api/users/reset-password
+{
+    "email" : "user@gmail.com",
+    "answer" : "GTA",
+    "newPassword" : "123456"
+}
+
+
+
 PUT  ==>  http://localhost:6060/api/users/update-picture
 In Postman key->file and value->select file  ==> then hit
 
@@ -122,6 +132,13 @@ curl --location --request PUT 'http://localhost:6060/api/products/update/pic/65e
 --header 'Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWRlMzU5ZmZiODFjZTM4YzFlYjcxZGEiLCJpYXQiOjE3MDkyMTQxNzksImV4cCI6MTcwOTgxODk3OX0.FBBAD8ijw7SU7EP_mDprPCs_Cp2k6FKgbwrtYRAX-Cg' \
 --form 'file=@"/C:/Users/intel/Downloads/free-images.jpg"'
 
+
+ADD PRODUCT REVIEW
+http://localhost:6060/api/products/65e56c5dea82fadfe8107614/review
+{
+    "comment" : "Nice Product",
+    "rating" : 5
+}
 
 
 DELETE PRODUCT IMAGE
@@ -247,19 +264,3 @@ GET  ==>  http://localhost:6060/api/order/admin/get-all-orders
 CHANGE ORDER STATUS BY ADMIN
 PUT ==> http://localhost:6060/api/order/admin/change-status/65e37a86d850a557574b2866
 
-
-RESET USER PASSWORD
-POST ==> http://localhost:6060/api/users/reset-password
-{
-    "email" : "user@gmail.com",
-    "answer" : "GTA",
-    "newPassword" : "123456"
-}
-
-
-ADD PRODUCT REVIEW
-http://localhost:6060/api/products/65e56c5dea82fadfe8107614/review
-{
-    "comment" : "Nice Product",
-    "rating" : 5
-}
